@@ -37,5 +37,17 @@ for broker in brokers.keys():
     book.createBroker(broker)
     book.insertBroker(broker,data)
 
-book_data = book.view(get=True)
+book_data = book.view(asdict=True) # By converting this ones response to a dict, we reduce the time complexity when calculating the diff in amounts (profit margin)
+
 # Get the max diff between the combinations of bid and asks
+# The number of brokers is the len of book_data
+# Each book_data item contains the bid and ask
+# Get the natural difference of each book_data and use this to set the initial desired diff data
+#   each time when setting the disired diff, take the bid and ask amount and broker data as well
+# For each broker, get the diff of their bid with all other asks, their ask with all other bids
+
+print("Number of brokers:", len(brokers))
+# for each broker
+#   get the bid and ask price data
+#   iterate over the other brokers
+#   

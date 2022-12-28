@@ -32,11 +32,15 @@ class Book:
         return
 
     # get/view the book's data
-    def view(self, get=False): # 0: False, 1: True
+    def view(self, asdict=False): # 0: False, 1: True
         self.c.execute('SELECT * FROM book')
         data = self.c.fetchall()
-        if get==False:print(data)
-        return data
+        if asdict==False:print(data)
+        else:
+            data_dictionary = {}
+            for broker in data:
+                data_dictionary[broker[0]] = {"bid": broker[2], "ask":broker[3]}
+        return data_dictionary
 
     # Close the cursor and the connection
     def close(self):
