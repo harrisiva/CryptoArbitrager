@@ -16,8 +16,8 @@ ENDPOINTS:dict = {
 
 # To receive responses from brokers in the required format, use these functions
 def coinbase(): return {
-    "bid": (requests.get(ENDPOINTS["Coinbase"]["buy"].format(INPUTS["Coinbase"])).json())['data']['amount'],
-    "ask": (requests.get(ENDPOINTS["Coinbase"]["sell"].format(INPUTS["Coinbase"])).json())['data']['amount'],
+    "bid": float((requests.get(ENDPOINTS["Coinbase"]["buy"].format(INPUTS["Coinbase"])).json())['data']['amount']),
+    "ask": float((requests.get(ENDPOINTS["Coinbase"]["sell"].format(INPUTS["Coinbase"])).json())['data']['amount']),
 }
 
 def kraken():
