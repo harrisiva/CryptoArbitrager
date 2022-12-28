@@ -30,6 +30,7 @@ while True:
         
         # Refresh the brokers data (also updates the book)
         for broker in BROKERS.keys(): book.insertBroker(broker,BROKERS[broker]())
-        
+        refreshed = datetime.datetime.now()
+
         # Find the most profitable trade (highest profit margin)
         print(functions.mostprofitable(book.view(asdict=True)))

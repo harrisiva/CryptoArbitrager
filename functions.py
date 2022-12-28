@@ -12,4 +12,7 @@ def mostprofitable(data): # Finds the most profitable trade (highest profit marg
                 "buy_price": data[buyer]['bid'],
                 "margin": margin 
             }
-            if margin>=highest[0]: highest[1]=difference
+            if margin>=highest[0]: 
+                highest[0]=margin
+                highest[1]=difference
+    return highest
