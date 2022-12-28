@@ -36,4 +36,6 @@ for broker in brokers.keys():
     data = brokers[broker]()
     book.createBroker(broker)
     book.insertBroker(broker,data)
-    book.view()
+
+book_data = book.view(get=True)
+# Get the max diff between the combinations of bid and asks

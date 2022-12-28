@@ -32,10 +32,10 @@ class Book:
         return
 
     # get/view the book's data
-    def view(self):
+    def view(self, get=False): # 0: False, 1: True
         self.c.execute('SELECT * FROM book')
         data = self.c.fetchall()
-        print(data)
+        if get==False:print(data)
         return data
 
     # Close the cursor and the connection
