@@ -3,10 +3,12 @@ from api import API
 from trade import Trade
 import datetime, argparse
 import functions
-
 #TODO: Get the arguments from the user (refresh time, failsafe time, base, currency)
 
 REFRESH = 5 # Refresh time interval in seconds
+BASE = "BTC"
+CURRENCY = "USD"
+BALANCE = 100000000
 
 trade = Trade("BTC","USD",100000000)
 book = Book() # Initialize a DB connection, cusor, and create a table for the book

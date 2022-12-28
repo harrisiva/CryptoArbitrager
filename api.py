@@ -1,6 +1,5 @@
 import requests, json
 
-# API Component
 class API:
     def __init__(self,base,currency):
         self.base = base

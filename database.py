@@ -51,9 +51,3 @@ class Book:
             print("Failed to close connection and cursor.")
             print(str(e))
         return
-
-# Order Book Concept:
-# To actually tade the initial amount (order book functionality)
-# Buy the initial amount worth of the coin at the ask price
-# Sell the number of coins for the bid price
-# Update the balance and log the trade

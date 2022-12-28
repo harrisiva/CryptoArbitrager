@@ -1,6 +1,6 @@
 import datetime
-
 #TODO: Use a SQL Table for storing the trades data
+
 class Trade:
     def __init__(self,base,currency,balance):
         self.base,self.currency, self.balance, self.quantity = base,currency,balance,0 
