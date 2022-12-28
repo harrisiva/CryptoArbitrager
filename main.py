@@ -3,14 +3,21 @@ from api import API
 from trade import Trade
 import datetime, argparse
 import functions
-#TODO: Get the arguments from the user (refresh time, failsafe time, base, currency)
+#TODO: Add logging
 
-REFRESH = 5 # Refresh time interval in seconds
-BASE = "BTC"
-CURRENCY = "USD"
-BALANCE = 100000000
+parser = argparse.ArgumentParser()
+parser.add_argument("-r",type=int,help="Refresh rate for updating database's price data in seconds. Default is 30 seconds.")
+parser.add_argument("-b",type=str,help="Base currency as a string. (E.X. BTC)", required=True)
+parser.add_argument("-c",type=str,help="Currenct for exchange as a string. (E.X. USD)", required=True)
+parser.add_argument("-ib",type=float, help="Initial Balance", required=True)
+args = parser.parse_args()
 
-trade = Trade("BTC","USD",100000000)
+REFRESH = args.r if args.r else 30 # Refresh time interval in seconds
+BASE = args.b
+CURRENCY = args.c
+BALANCE = args.ib
+
+trade = Trade(BASE,CURRENCY,BALANCE)
 book = Book() # Initialize a DB connection, cusor, and create a table for the book
 client = API(trade.base,trade.currency) # Initialize a object containing methods that provide data from different brokers for the given base and currency
 
