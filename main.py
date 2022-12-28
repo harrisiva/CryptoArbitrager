@@ -18,3 +18,4 @@
 #   If the entry pair for the maximum difference both have a timestamp of that indicates that it was updated:
 #       Perform the trade if it is within a failsafe period (s) from the update time
 #       Log the trade time
+
