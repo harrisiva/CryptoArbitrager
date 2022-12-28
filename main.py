@@ -1,5 +1,6 @@
 from database import Book
 from api import API
+from trade import Trade
 import datetime, argparse
 import functions
 
@@ -7,8 +8,9 @@ import functions
 
 REFRESH = 5 # Refresh time interval in seconds
 
+trade = Trade("BTC","USD",100000000)
 book = Book() # Initialize a DB connection, cusor, and create a table for the book
-client = API("BTC","USD") # Initialize a object containing methods that provide data from different brokers for the given base and currency
+client = API(trade.base,trade.currency) # Initialize a object containing methods that provide data from different brokers for the given base and currency
 
 BROKERS = { # Initialize a dictionary of BROKERS and their function (that returns bid and ask) from the client instance
     "coinbase": client.coinbase,
@@ -23,7 +25,7 @@ for broker in BROKERS.keys():
     book.insertBroker(broker,data)
 
 # Perform the first trade if required
-print(functions.mostprofitable(book.view(asdict=True)))
+trade.place(functions.mostprofitable(book.view(asdict=True))[1],view=True)
 
 while True:
     if datetime.datetime.now()>=(refreshed+datetime.timedelta(seconds=REFRESH)):
@@ -33,4 +35,4 @@ while True:
         refreshed = datetime.datetime.now()
 
         # Find the most profitable trade (highest profit margin)
-        print(functions.mostprofitable(book.view(asdict=True)))
+        trade.place(functions.mostprofitable(book.view(asdict=True))[1],view=True)
