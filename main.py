@@ -26,28 +26,34 @@ from api import API
 book = Book()
 client = API("BTC","USD")
 
-brokers = {
+BROKERS = {
     "coinbase": client.coinbase,
     "kraken": client.kraken
 }
 
 # Populate the book for the first time
-for broker in brokers.keys():
-    data = brokers[broker]()
+for broker in BROKERS.keys():
+    data = BROKERS[broker]()
     book.createBroker(broker)
     book.insertBroker(broker,data)
 
+# Refresh the book
+for broker in BROKERS.keys(): book.insertBroker(broker,BROKERS[broker]())
+
 book_data = book.view(asdict=True) # By converting this ones response to a dict, we reduce the time complexity when calculating the diff in amounts (profit margin)
 
-# Get the max diff between the combinations of bid and asks
-# The number of brokers is the len of book_data
-# Each book_data item contains the bid and ask
-# Get the natural difference of each book_data and use this to set the initial desired diff data
-#   each time when setting the disired diff, take the bid and ask amount and broker data as well
-# For each broker, get the diff of their bid with all other asks, their ask with all other bids
-
-print("Number of brokers:", len(brokers))
-# for each broker
-#   get the bid and ask price data
-#   iterate over the other brokers
-#   
+# Find the most profitable trade (highest profit margin)
+highest = [0,{}]
+for selling_broker in book_data:
+    ask = book_data[selling_broker]['ask']
+    buyers = [buyer_broker for buyer_broker in book_data if buyer_broker!=selling_broker]
+    for buyer in buyers:
+        margin = book_data[buyer]['bid']-ask
+        difference = {
+            "seller": selling_broker,
+            "buyer": buyer,
+            "sell_price": ask,
+            "buy_price": book_data[buyer]['bid'],
+            "margin": margin 
+        }
+        if margin>=highest[0]: highest[1]=difference
