@@ -19,3 +19,21 @@
 #       Perform the trade if it is within a failsafe period (s) from the update time
 #       Log the trade time
 
+# Logic for API and Database Integration
+from database import Book
+from api import API
+
+book = Book()
+client = API("BTC","USD")
+
+brokers = {
+    "coinbase": client.coinbase,
+    "kraken": client.kraken
+}
+
+# Populate the book for the first time
+for broker in brokers.keys():
+    data = brokers[broker]()
+    book.createBroker(broker)
+    book.insertBroker(broker,data)
+    book.view()
