@@ -1,4 +1,4 @@
-# CryptoArbitrageur
+# CryptoArbitrager
 ## Overview
 This program automates the price arbitrage trading model for crypto currencies using a SQLite3 database and a component based architecture that follow OOP principles.
 ## Design
